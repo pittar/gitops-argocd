@@ -11,7 +11,7 @@ spec:
   source:
     path: gitops/config
     repoURL: https://github.com/pittar/gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: rhpds
   syncPolicy:
     automated:
       prune: false
@@ -24,4 +24,4 @@ spec:
       source:
         path: gitops/config
         repoURL: https://github.com/pittar/gitops-argocd.git
-        targetRevision: HEAD
+        targetRevision: rhpds

@@ -13,7 +13,7 @@ spec:
   source:
     path: gitops/java/petclinic/overlays/dev
     repoURL: https://github.com/pittar/gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: rhpds
   syncPolicy:
     automated:
       prune: false
@@ -35,4 +35,4 @@ spec:
       source:
         path: gitops/java/petclinic/overlays/dev
         repoURL: https://github.com/pittar/gitops-argocd.git
-        targetRevision: HEAD
+        targetRevision: rhpds

@@ -13,7 +13,7 @@ spec:
   source:
     path: gitops/cicd/sonarqube
     repoURL: https://github.com/pittar/gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: rhpds
   syncPolicy:
     automated:
       prune: true
@@ -31,4 +31,4 @@ spec:
       source:
         path: gitops/cicd/sonarqube
         repoURL: https://github.com/pittar/gitops-argocd.git
-        targetRevision: HEAD
+        targetRevision: rhpds

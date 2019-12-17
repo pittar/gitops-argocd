@@ -13,7 +13,7 @@ spec:
   source:
     path: gitops/codeready
     repoURL: https://github.com/pittar/gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: rhpds
     directory:
       recurse: true
   syncPolicy:
@@ -33,4 +33,4 @@ spec:
       source:
         path: gitops/codeready
         repoURL: https://github.com/pittar/gitops-argocd.git
-        targetRevision: HEAD
+        targetRevision: rhpds
