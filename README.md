@@ -1,4 +1,4 @@
-# ArgoCD Demo for OpenShift 4
+# GitOps with ArgoCD on OpenShift 4
 
 Install ArgoCD and some resources to demonstrate GitOps concepts and how they relate to OpenShift.
 
@@ -14,16 +14,8 @@ argocd login 127.0.0.1:8080
 
 ## Fork and Update the Repo
 
-Fork this repository and clone it.  You can then switch to the `template` branch, create a new branch specific to your cluster, then push it:
+Fork this repository and clone it.  The `master` branch is setup to be a template branch for you to configure for your own cluster and git repository.
 
-```
-# Switch to template branch.
-git checkout template
-# Create a new branch based on template.
-git checkout -b mycluster
-# Push your new branch.
-git push origin mycluster
-```
 
 Next, update the routes to match the apps wildcard url for your cluster:
 ```
@@ -35,6 +27,17 @@ For example, if you want to run this against CodeReady Containers:
 find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/apps\.example\.com/apps-crc\.testing/g'
 ```
 
+Next, update the repository links to point to your fork:
+
+Next, update the routes to match the apps wildcard url for your cluster:
+```
+find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/git\.url\.git/https:\/\/yourepourl\.git/g'
+```
+
+For example, if you want to run this against CodeReady Containers:
+```
+find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/git\.url\.git/https:\/\/github.com\/pittar\/gitops-argocd\.git/g'
+```
 
 
 ## Install ArgoCD
