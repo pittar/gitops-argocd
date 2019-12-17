@@ -12,7 +12,7 @@ spec:
   project: cicd-project
   source:
     path: gitops/codeready
-    repoURL: git.url.git
+    repoURL: https://github.com/pittar/gitops-argocd.git
     targetRevision: HEAD
     directory:
       recurse: true
@@ -32,5 +32,5 @@ spec:
         server: https://kubernetes.default.svc
       source:
         path: gitops/codeready
-        repoURL: git.url.git
+        repoURL: https://github.com/pittar/gitops-argocd.git
         targetRevision: HEAD

@@ -12,7 +12,7 @@ spec:
   project: cicd-project
   source:
     path: gitops/cicd/project
-    repoURL: git.url.git
+    repoURL: https://github.com/pittar/gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
     automated:
@@ -25,5 +25,5 @@ spec:
         server: https://kubernetes.default.svc
       source:
         path: gitops/cicd/project
-        repoURL: git.url.git
+        repoURL: https://github.com/pittar/gitops-argocd.git
         targetRevision: HEAD

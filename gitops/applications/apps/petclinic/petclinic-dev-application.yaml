@@ -12,7 +12,7 @@ spec:
   project: java-project
   source:
     path: gitops/java/petclinic/overlays/dev
-    repoURL: git.url.git
+    repoURL: https://github.com/pittar/gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
     automated:
@@ -34,5 +34,5 @@ spec:
         server: https://kubernetes.default.svc
       source:
         path: gitops/java/petclinic/overlays/dev
-        repoURL: git.url.git
+        repoURL: https://github.com/pittar/gitops-argocd.git
         targetRevision: HEAD

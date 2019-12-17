@@ -9,7 +9,7 @@ metadata:
   name: nexus
   namespace: cicd
 spec:
-  host: nexus-cicd.apps.example.com
+  host: nexus-cicd.apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
   port:
     targetPort: 8081-tcp
   subdomain: ""
@@ -21,7 +21,7 @@ spec:
 status:
   ingress:
   - conditions:
-    host: nexus-cicd.apps.example.com
-    routerCanonicalHostname: apps.example.com
+    host: nexus-cicd.apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
+    routerCanonicalHostname: apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
     routerName: default
     wildcardPolicy: None
