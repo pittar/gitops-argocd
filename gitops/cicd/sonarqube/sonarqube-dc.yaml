@@ -1,0 +1,93 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    app.openshift.io/connects-to: postgresql-sonarqube
+  labels:
+    app: sonarqube
+    deploymentconfig: sonarqube
+  name: sonarqube
+  namespace: cicd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    app: sonarqube
+    deploymentconfig: sonarqube
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        openshift.io/container.sonarqube.image.entrypoint: '["./bin/run.sh"]'
+      creationTimestamp: null
+      labels:
+        app: sonarqube
+        deploymentconfig: sonarqube
+    spec:
+      containers:
+      - env:
+        - name: SONARQUBE_JDBC_PASSWORD
+          value: kHPdpIYtdtGXeStv
+        - name: SONARQUBE_JDBC_URL
+          value: jdbc:postgresql://postgresql-sonarqube/sonar
+        - name: SONARQUBE_JDBC_USERNAME
+          value: sonar
+        image: openshiftdemos/sonarqube@sha256:9334b80c3db67b973253559b81e7075119b8e38d0f9865867209d9f22bbe232c
+        imagePullPolicy: IfNotPresent
+        name: sonarqube
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "2"
+            memory: 3Gi
+          requests:
+            cpu: 500m
+            memory: 3Gi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/sonarqube/data
+          name: sonarqube-data
+        - mountPath: /opt/sonarqube/extensions/plugins
+          name: sonarqube-extensions
+        - mountPath: /opt/sonarqube/conf
+          name: sonarqube-conf
+        - mountPath: /opt/sonarqube/logs
+          name: sonarqube-conf
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: sonarqube-data
+        persistentVolumeClaim:
+          claimName: sonarqube-data
+      - name: sonarqube-extensions
+        persistentVolumeClaim:
+          claimName: sonarqube-extensions
+      - name: sonarqube-conf
+        persistentVolumeClaim:
+          claimName: sonarqube-conf
+      - name: sonarqube-logs
+        persistentVolumeClaim:
+          claimName: sonarqube-logs
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - sonarqube
+      from:
+        kind: ImageStreamTag
+        name: sonarqube:7.0
+        namespace: cicd
+    type: ImageChange

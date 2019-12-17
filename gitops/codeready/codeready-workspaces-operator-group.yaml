@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: codeready-hrck2
+  namespace: codeready
+spec:
+  targetNamespaces:
+  - codeready

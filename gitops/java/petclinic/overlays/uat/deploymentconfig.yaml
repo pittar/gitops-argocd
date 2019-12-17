@@ -1,0 +1,21 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: petclinic
+spec:
+  template:
+    spec:
+      containers:
+      - imagePullPolicy: Always
+        name: petclinic
+  triggers:
+  - imageChangeParams:
+      automatic: false
+      containerNames:
+      - petclinic
+      from:
+        kind: ImageStreamTag
+        name: petclinic:uat
+        namespace: cicd
+    type: ImageChange
+  

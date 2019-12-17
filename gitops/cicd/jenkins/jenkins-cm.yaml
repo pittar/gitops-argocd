@@ -1,0 +1,67 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jenkins-agent
+  namespace: cicd
+  labels:
+    role: jenkins-slave
+data:
+  template1: |-
+    <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+      <inheritFrom></inheritFrom>
+      <name>maven</name>
+      <namespace></namespace>
+      <privileged>false</privileged>
+      <capOnlyOnAlivePods>false</capOnlyOnAlivePods>
+      <alwaysPullImage>false</alwaysPullImage>
+      <instanceCap>2147483647</instanceCap>
+      <slaveConnectTimeout>100</slaveConnectTimeout>
+      <idleMinutes>0</idleMinutes>
+      <activeDeadlineSeconds>0</activeDeadlineSeconds>
+      <label>maven</label>
+      <serviceAccount>jenkins</serviceAccount>
+      <nodeSelector></nodeSelector>
+      <nodeUsageMode>NORMAL</nodeUsageMode>
+      <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
+      <workspaceVolume class="org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.EmptyDirWorkspaceVolume">
+        <memory>false</memory>
+      </workspaceVolume>
+      <volumes/>
+      <containers>
+        <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+          <name>jnlp</name>
+          <image>registry.access.redhat.com/openshift3/jenkins-agent-maven-35-rhel7:v3.11</image>
+          <privileged>false</privileged>
+          <alwaysPullImage>true</alwaysPullImage>
+          <workingDir>/tmp</workingDir>
+          <command></command>
+          <args>${computer.jnlpmac} ${computer.name}</args>
+          <ttyEnabled>false</ttyEnabled>
+          <resourceRequestCpu></resourceRequestCpu>
+          <resourceRequestMemory></resourceRequestMemory>
+          <resourceLimitCpu></resourceLimitCpu>
+          <resourceLimitMemory></resourceLimitMemory>
+          <envVars>
+            <org.csanchez.jenkins.plugins.kubernetes.model.KeyValueEnvVar>
+              <key>MAVEN_MIRROR_URL</key>
+              <value>http://nexus:8081/content/groups/public</value>
+            </org.csanchez.jenkins.plugins.kubernetes.model.KeyValueEnvVar>
+          </envVars>
+          <ports/>
+          <livenessProbe>
+            <execArgs></execArgs>
+            <timeoutSeconds>0</timeoutSeconds>
+            <initialDelaySeconds>0</initialDelaySeconds>
+            <failureThreshold>0</failureThreshold>
+            <periodSeconds>0</periodSeconds>
+            <successThreshold>0</successThreshold>
+          </livenessProbe>
+        </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+      </containers>
+      <envVars/>
+      <annotations/>
+      <imagePullSecrets/>
+      <nodeProperties/>
+      <yaml></yaml>
+      <podRetention class="org.csanchez.jenkins.plugins.kubernetes.pod.retention.Default"/>
+    </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>  

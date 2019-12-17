@@ -1,0 +1,29 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: petclinic
+    app.kubernetes.io/component: petclinic
+    app.kubernetes.io/instance: petclinic
+    app.kubernetes.io/name: java
+    app.kubernetes.io/part-of: petclinic-demo
+    app.openshift.io/runtime: java
+    app.openshift.io/runtime-version: "8"
+  name: petclinic
+spec:
+  host: app-petclinic-default.apps.example.com
+  port:
+    targetPort: 8080-tcp
+  subdomain: ""
+  to:
+    kind: Service
+    name: petclinic
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    host: app-petclinic-default.apps.example.com
+    routerCanonicalHostname: apps.example.com
+    routerName: default
+    wildcardPolicy: None
