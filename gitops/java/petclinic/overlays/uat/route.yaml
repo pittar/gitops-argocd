@@ -3,8 +3,8 @@ kind: Route
 metadata:
   name: petclinic
 spec:
-  host: app-petclinic-uat.apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
+  host: app-petclinic-uat.apps.cluster-ottawa-57ac.ottawa-57ac.example.opentlc.com
 status:
   ingress:
   - conditions:
-    host: app-petclinic-uat.apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
+    host: app-petclinic-uat.apps.cluster-ottawa-57ac.ottawa-57ac.example.opentlc.com

@@ -11,7 +11,7 @@ metadata:
     app.openshift.io/runtime-version: "8"
   name: petclinic
 spec:
-  host: app-petclinic-default.apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
+  host: app-petclinic-default.apps.cluster-ottawa-57ac.ottawa-57ac.example.opentlc.com
   port:
     targetPort: 8080-tcp
   subdomain: ""
@@ -23,7 +23,7 @@ spec:
 status:
   ingress:
   - conditions:
-    host: app-petclinic-default.apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
-    routerCanonicalHostname: apps.cluster-ottawa-e50c.ottawa-e50c.example.opentlc.com
+    host: app-petclinic-default.apps.cluster-ottawa-57ac.ottawa-57ac.example.opentlc.com
+    routerCanonicalHostname: apps.cluster-ottawa-57ac.ottawa-57ac.example.opentlc.com
     routerName: default
     wildcardPolicy: None
