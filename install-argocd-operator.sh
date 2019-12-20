@@ -33,5 +33,5 @@ echo "Waiting 30 seconds for the pods to be created..."
 sleep 30
 echo "Printing default admin password:"
 oc -n argocd get pod -l "app.kubernetes.io/name=argocd-server" -o jsonpath='{.items[*].metadata.name}'
-
+echo ""
 echo "Enjoy!"
