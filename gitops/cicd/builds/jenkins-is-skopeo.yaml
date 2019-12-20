@@ -3,6 +3,7 @@ kind: ImageStream
 metadata:
   labels:
     app: jenkins-slave-skopeo
+    role: jenkins-slave
   name: jenkins-slave-skopeo
   namespace: cicd
 spec:
