@@ -29,22 +29,22 @@ spec:
         value: skopeo
       - name: OCP_USER
         valueFrom:
-          configMapRef:
+          configMapKeyRef:
             key: ocp.user
             name: skopeo-config
       - name: OCP_PASS
         valueFrom:
-          configMapRef:
+          configMapKeyRef:
             key: ocp.pass
             name: skopeo-config
       - name: QUAY_USER
         valueFrom:
-          configMapRef:
+          configMapKeyRef:
             key: quay.user
             name: skopeo-config
       - name: QUAY_PASS
         valueFrom:
-          configMapRef:
+          configMapKeyRef:
             key: quay.pass
             name: skopeo-config
       jenkinsfilePath: Jenkinsfile
