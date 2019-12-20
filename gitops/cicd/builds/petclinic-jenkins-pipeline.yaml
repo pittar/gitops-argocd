@@ -27,6 +27,26 @@ spec:
         value: https://github.com/pittar/spring-petclinic.git
       - name: GIT_SOURCE_REF
         value: skopeo
+      - name: OCP_USER
+        valueFrom:
+          configMapRef:
+            key: ocp.user
+            name: skopeo-config
+      - name: OCP_PASS
+        valueFrom:
+          configMapRef:
+            key: ocp.pass
+            name: skopeo-config
+      - name: QUAY_USER
+        valueFrom:
+          configMapRef:
+            key: quay.user
+            name: skopeo-config
+      - name: QUAY_PASS
+        valueFrom:
+          configMapRef:
+            key: quay.pass
+            name: skopeo-config
       jenkinsfilePath: Jenkinsfile
     type: JenkinsPipeline
   successfulBuildsHistoryLimit: 5
