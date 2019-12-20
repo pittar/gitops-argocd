@@ -6,4 +6,4 @@ spec:
   template:
     spec:
       containers:
-      - image: quay.io/pittar/petclinic:uat
+      - image: quay.io/pittar/petclinic:latest
