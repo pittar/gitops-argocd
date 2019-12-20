@@ -29,8 +29,8 @@ sleep 3
 
 echo "Create an Argo CD instance."
 oc create -f https://raw.githubusercontent.com/pittar/argocd-demo/master/deploy/argocd.yaml
-echo "Waiting 10 seconds for the pods to be created..."
-sleep 10
+echo "Waiting 30 seconds for the pods to be created..."
+sleep 30
 echo "Printing default admin password:"
 oc -n argocd get pod -l "app.kubernetes.io/name=argocd-server" -o jsonpath='{.items[*].metadata.name}'
 
