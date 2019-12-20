@@ -7,3 +7,4 @@ spec:
     spec:
       containers:
       - image: quay.io/pittar/petclinic:latest
+        name: petclinic
