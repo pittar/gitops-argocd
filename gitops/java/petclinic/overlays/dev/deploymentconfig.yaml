@@ -6,16 +6,4 @@ spec:
   template:
     spec:
       containers:
-      - imagePullPolicy: Always
-        name: petclinic
-  triggers:
-  - imageChangeParams:
-      automatic: false
-      containerNames:
-      - petclinic
-      from:
-        kind: ImageStreamTag
-        name: petclinic:dev
-        namespace: cicd
-    type: ImageChange
-  
+      - image: quay.io/pittar/petclinic:dev

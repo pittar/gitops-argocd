@@ -33,7 +33,8 @@ spec:
         deploymentconfig: petclinic
     spec:
       containers:
-      - imagePullPolicy: Always
+      - image: quay.io/pittar/petclinic:latest
+        imagePullPolicy: Always
         name: petclinic
         ports:
         - containerPort: 8080
@@ -51,15 +52,4 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
   test: false
-  triggers:
-  - imageChangeParams:
-      automatic: false
-      containerNames:
-      - petclinic
-      from:
-        kind: ImageStreamTag
-        name: petclinic:latest
-        namespace: cicd
-    type: ImageChange
-  - type: ConfigChange
-  
+  triggers: []
