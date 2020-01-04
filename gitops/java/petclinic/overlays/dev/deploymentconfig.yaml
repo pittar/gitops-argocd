@@ -6,5 +6,5 @@ spec:
   template:
     spec:
       containers:
-      - image: quay.io/pittar/petclinic:latest
+      - image: quay.io/pittar/petclinic:dev
         name: petclinic
