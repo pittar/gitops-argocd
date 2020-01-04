@@ -15,7 +15,7 @@ spec:
   runPolicy: Serial
   source:
     git:
-      ref: skopeo
+      ref: master
       uri: https://github.com/pittar/spring-petclinic.git
     type: Git
   strategy:
@@ -26,7 +26,7 @@ spec:
       - name: GIT_SOURCE_URL
         value: https://github.com/pittar/spring-petclinic.git
       - name: GIT_SOURCE_REF
-        value: skopeo
+        value: master
       - name: OCP_USER
         valueFrom:
           configMapKeyRef:
