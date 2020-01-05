@@ -21,7 +21,7 @@ spec:
     contextDir: selenium-node-chrome
     git:
       ref: master
-      uri: https://github.com/pitttar/openshift-selenium.git
+      uri: https://github.com/pittar/openshift-selenium.git
     type: Git
   strategy:
     dockerStrategy:
