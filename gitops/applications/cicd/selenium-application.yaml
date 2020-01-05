@@ -23,6 +23,10 @@ spec:
     kind: Route
     jsonPointers:
     - /status/ingress
+    - group: build.openshift.io
+    kind: BuildConfig
+    jsonPointers:
+    - /status/lastVersion
   sync:
     comparedTo:
       destination:
