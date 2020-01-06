@@ -19,13 +19,13 @@ spec:
         resources: {}
         readinessProbe:
           httpGet:
-            path: /healthz
+            path: /health
             port: 8080
           initialDelaySeconds: 20
           timeoutSeconds: 2
         livenessProbe:
           httpGet:
-            path: /healthz
+            path: /health
             port: 8080
           initialDelaySeconds: 40
           timeoutSeconds: 2
