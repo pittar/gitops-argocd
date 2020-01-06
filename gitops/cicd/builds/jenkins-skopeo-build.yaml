@@ -26,6 +26,12 @@ spec:
         name: jenkins-slave-base-centos7:latest
     type: Docker
   successfulBuildsHistoryLimit: 5
-  triggers: []
+  triggers:
+  - type: ConfigChange
+  - imageChange:
+      from:
+        kind: ImageStreamTag
+        name: jenkins-slave-base-centos7:latest
+    type: ImageChange
 status:
   lastVersion: 0
