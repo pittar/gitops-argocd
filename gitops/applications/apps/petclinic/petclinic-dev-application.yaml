@@ -23,6 +23,10 @@ spec:
     kind: DeploymentConfig
     jsonPointers:
     - /spec/replicas
+  - group: ""
+    kind: ReplicationController
+    jsonPointers:
+    - /spec/replicas
   - group: route.openshift.io
     kind: Route
     jsonPointers:
