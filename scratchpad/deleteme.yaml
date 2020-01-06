@@ -30,3 +30,5 @@ oc new-app --name=tasks --docker-image=quay.io/pittar/petclinic-dev:latest --all
 
 oc new-build --name=tasks --image-stream=redhat-openjdk18-openshift:1.4 --binary=true --push-secret=quay-cicd-secret --to-docker --to='quay.io/pittar/petclinic:latest' -n petclinic-dev
 
+oc create secret generic quay-creds-secret --from-literal="username=pittar" --from-literal='password=Initech0627!' -n cicd
+oc label secret quay-creds-secret credential.sync.jenkins.openshift.io=true -n cicd

@@ -6,7 +6,7 @@ metadata:
   name: selenium-hub
   namespace: cicd
 spec:
-  host: selenium-hub-cicd.apps.cluster-ott-407e.ott-407e.example.opentlc.com
+  host: selenium-hub-cicd.apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
   port:
     targetPort: 4444-tcp
   subdomain: ""
@@ -18,7 +18,7 @@ spec:
 status:
   ingress:
   - conditions:
-    host: selenium-hub-cicd.apps.cluster-ott-407e.ott-407e.example.opentlc.com
-    routerCanonicalHostname: apps.cluster-ott-407e.ott-407e.example.opentlc.com
+    host: selenium-hub-cicd.apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
+    routerCanonicalHostname: apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
     routerName: default
     wildcardPolicy: None
