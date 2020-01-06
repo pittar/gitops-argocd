@@ -19,10 +19,10 @@ spec:
       prune: false
       selfHeal: false
   ignoreDifferences:
-  - group: build.openshift.io
-    kind: BuildConfig
+  - group: apps.openshift.io
+    kind: DeploymentConfig
     jsonPointers:
-    - /status/lastVersion
+    - /spec/replicas
   - group: route.openshift.io
     kind: Route
     jsonPointers:
