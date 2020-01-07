@@ -45,6 +45,11 @@ For example, if you want to use the original Github repo:
 find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/git\.url\.git/https:\/\/github.com\/pittar\/gitops-argocd\.git/g'
 ```
 
+If necessary, also update the branch (default is `master`) to the branch you want to use:
+```
+find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/targetRevision:\ master/targetRevision:\ mybranch/g'
+```
+
 ## Add Argo CD Projects and Applications
 
 ### Projects
