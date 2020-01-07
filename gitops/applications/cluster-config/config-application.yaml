@@ -10,7 +10,7 @@ spec:
   project: config-project
   source:
     path: gitops/config
-    repoURL: https://github.com/pittar/gitops-argocd.git
+    repoURL: git.url.git
     targetRevision: rhpds
   syncPolicy:
     automated:
@@ -23,5 +23,5 @@ spec:
         server: https://kubernetes.default.svc
       source:
         path: gitops/config
-        repoURL: https://github.com/pittar/gitops-argocd.git
+        repoURL: git.url.git
         targetRevision: rhpds

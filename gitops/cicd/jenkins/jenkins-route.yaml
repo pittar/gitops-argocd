@@ -10,7 +10,7 @@ metadata:
   name: jenkins
   namespace: cicd
 spec:
-  host: jenkins-cicd.apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
+  host: jenkins-cicd.apps.example.com
   subdomain: ""
   tls:
     insecureEdgeTerminationPolicy: Redirect
@@ -23,7 +23,7 @@ spec:
 status:
   ingress:
   - conditions:
-    host: jenkins-cicd.apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
-    routerCanonicalHostname: apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
+    host: jenkins-cicd.apps.example.com
+    routerCanonicalHostname: apps.example.com
     routerName: default
     wildcardPolicy: None

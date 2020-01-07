@@ -6,7 +6,7 @@ metadata:
   name: sonarqube
   namespace: cicd
 spec:
-  host: sonarqube-cicd.apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
+  host: sonarqube-cicd.apps.example.com
   subdomain: ""
   to:
     kind: Service
@@ -16,7 +16,7 @@ spec:
 status:
   ingress:
   - conditions:
-    host: sonarqube-cicd.apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
-    routerCanonicalHostname: apps.cluster-ottawa-630b.ottawa-630b.example.opentlc.com
+    host: sonarqube-cicd.apps.example.com
+    routerCanonicalHostname: apps.example.com
     routerName: default
     wildcardPolicy: None
