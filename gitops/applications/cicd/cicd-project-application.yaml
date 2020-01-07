@@ -13,7 +13,7 @@ spec:
   source:
     path: gitops/cicd/project
     repoURL: git.url.git
-    targetRevision: rhpds
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true
@@ -26,4 +26,4 @@ spec:
       source:
         path: gitops/cicd/project
         repoURL: git.url.git
-        targetRevision: rhpds
+        targetRevision: master

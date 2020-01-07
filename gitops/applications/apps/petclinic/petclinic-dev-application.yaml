@@ -13,7 +13,7 @@ spec:
   source:
     path: gitops/java/petclinic/overlays/dev
     repoURL: git.url.git
-    targetRevision: rhpds
+    targetRevision: master
   syncPolicy:
     automated:
       prune: false
@@ -39,4 +39,4 @@ spec:
       source:
         path: gitops/java/petclinic/overlays/dev
         repoURL: git.url.git
-        targetRevision: rhpds
+        targetRevision: master
