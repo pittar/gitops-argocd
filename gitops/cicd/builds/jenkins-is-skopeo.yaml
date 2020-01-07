@@ -1,0 +1,11 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: jenkins-slave-skopeo
+    role: jenkins-slave
+  name: jenkins-slave-skopeo
+  namespace: cicd
+spec:
+  lookupPolicy:
+    local: false

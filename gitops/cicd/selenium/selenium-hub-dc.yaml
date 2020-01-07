@@ -2,20 +2,15 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: petclinic
-    app.kubernetes.io/component: petclinic
-    app.kubernetes.io/instance: petclinic
-    app.kubernetes.io/name: java
-    app.kubernetes.io/part-of: petclinic-demo
-    app.openshift.io/runtime: java
-    app.openshift.io/runtime-version: "8"
-  name: petclinic
+    app: selenium
+  name: selenium-hub
+  namespace: cicd
 spec:
   replicas: 1
   revisionHistoryLimit: 5
   selector:
-    app: petclinic
-    deploymentconfig: petclinic
+    app: selenium
+    deploymentconfig: selenium-hub
   strategy:
     activeDeadlineSeconds: 21600
     resources: {}
@@ -29,33 +24,42 @@ spec:
   template:
     metadata:
       labels:
-        app: petclinic
-        deploymentconfig: petclinic
+        app: selenium
+        deploymentconfig: selenium-hub
     spec:
       containers:
-      - image: quay.io/pittar/petclinic:latest
+      - name: selenium-hub
         imagePullPolicy: Always
-        name: petclinic
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /status
+            port: 4444
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
         ports:
+        - containerPort: 4444
+          protocol: TCP
         - containerPort: 8080
           protocol: TCP
         - containerPort: 8443
           protocol: TCP
         - containerPort: 8778
           protocol: TCP
-        resources: {}
         readinessProbe:
+          failureThreshold: 3
           httpGet:
-            path: /actuator/health
-            port: 8080
+            path: /status
+            port: 4444
+            scheme: HTTP
           initialDelaySeconds: 15
-          timeoutSeconds: 2
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 40
-          timeoutSeconds: 2
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
@@ -64,4 +68,14 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
   test: false
-  triggers: []
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - selenium-hub
+      from:
+        kind: ImageStreamTag
+        name: selenium-hub:3.141.59
+        namespace: cicd
+    type: ImageChange

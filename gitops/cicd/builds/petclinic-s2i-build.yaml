@@ -10,9 +10,11 @@ spec:
   failedBuildsHistoryLimit: 5
   nodeSelector: {}
   output:
+    pushSecret:
+      name: quay-cicd-secret
     to:
-      kind: ImageStreamTag
-      name: petclinic:latest
+      kind: DockerImage
+      name: quay.io/pittar/petclinic:latest
   postCommit: {}
   resources: {}
   runPolicy: Serial
@@ -23,7 +25,7 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: redhat-openjdk18-openshift:1.4
+        name: redhat-openjdk18-openshift:1.5
         namespace: openshift
     type: Source
   successfulBuildsHistoryLimit: 5

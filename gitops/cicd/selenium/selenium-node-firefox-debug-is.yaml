@@ -1,0 +1,11 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: selenium
+    build: selenium-node-firefox-debug
+  name: selenium-node-firefox-debug
+  namespace: cicd
+spec:
+  lookupPolicy:
+    local: false

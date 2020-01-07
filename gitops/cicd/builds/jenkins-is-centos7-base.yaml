@@ -1,0 +1,20 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: jenkins-slave-base-centos7
+  name: jenkins-slave-base-centos7
+  namespace: cicd
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - annotations:
+      openshift.io/imported-from: openshift/jenkins-slave-base-centos7
+    from:
+      kind: DockerImage
+      name: openshift/jenkins-slave-base-centos7
+    importPolicy: {}
+    name: latest
+    referencePolicy:
+      type: Source
