@@ -26,8 +26,10 @@ Fork this repository and clone it.  The `master` branch is setup to be a templat
 
 Once you are in your own repo and branch, execute the `new-env.sh` script to update the files to reflect your own environment:
 ```
-./new-env.sh
-
+./new-env.sh 
+Base apps url (e.g. apps.ocp.pitt.ca): apps.ocp.mycluster.ca
+Git repository url: https://github.com/pittar/gitops-argocd.git
+Git branch (e.g. master): master
 ```
 
 ## Add Argo CD Projects and Applications
