@@ -4,9 +4,16 @@ read -p 'Base apps url (e.g. app.ocp.pitt.ca): ' APPS_BASE_URL
 read -p 'Git repository url: ' GIT_URL
 read -p 'Git branch (e.g. master): ' GIT_REF
 
-FIND_ROUTE_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'\' \'s/apps\\.example\\.com/'
-FIND_REPO_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'\' \'s/git\\.url\\.git/'
-FIND_BRANCH_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'\' \'s/targetRevision:\ master/targetRevision:\ '
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    FIND_ROUTE_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'\' \'s/apps\\.example\\.com/'
+    FIND_REPO_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'\' \'s/git\\.url\\.git/'
+    FIND_BRANCH_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'\' \'s/targetRevision:\ master/targetRevision:\ '
+else
+    FIND_ROUTE_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'s/apps\\.example\\.com/'
+    FIND_REPO_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'s/git\\.url\\.git/'
+    FIND_BRANCH_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'s/targetRevision:\ master/targetRevision:\ '
+fi
+
 FIND_SUFFIX=$'/g\''
 
 ROUTE=$(sed 's/\./\\./g' <<< $APPS_BASE_URL)
@@ -18,9 +25,11 @@ FIND_AND_REPLACE_ROUTE=$FIND_ROUTE_PREFIX$ROUTE$FIND_SUFFIX
 FIND_AND_REPLACE_REPO="$FIND_REPO_PREFIX$REPO$FIND_SUFFIX"
 FIND_AND_REPLACE_BRANCH="$FIND_BRANCH_PREFIX$BRANCH$FIND_SUFFIX"
 
-echo "About to execute: "
+echo "Replacing Routes... "
 echo "$FIND_AND_REPLACE_ROUTE"
+echo "Replacing git repos..."
 echo "$FIND_AND_REPLACE_REPO"
+echo "Replacing git branches..."
 echo "$FIND_AND_REPLACE_BRANCH"
 echo ""
 

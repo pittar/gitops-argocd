@@ -24,30 +24,10 @@ argocd login 127.0.0.1:8080
 
 Fork this repository and clone it.  The `master` branch is setup to be a template branch for you to configure for your own cluster and git repository.
 
+Once you are in your own repo and branch, execute the `new-env.sh` script to update the files to reflect your own environment:
+```
+./new-env.sh
 
-Next, update the `routes` to match the apps wildcard url for your cluster:
-```
-find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/apps\.example\.com/apps\.mycluster\.com/g'
-```
-
-For example, if you want to run this against CodeReady Containers:
-```
-find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/apps\.example\.com/apps-crc\.testing/g'
-```
-
-Next, update the `project` files to point to your repository:
-```
-find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/git\.url\.git/https:\/\/yourepourl\.git/g'
-```
-
-For example, if you want to use the original Github repo:
-```
-find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/git\.url\.git/https:\/\/github.com\/pittar\/gitops-argocd\.git/g'
-```
-
-If necessary, also update the branch (default is `master`) to the branch you want to use:
-```
-find $PWD \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' 's/targetRevision:\ master/targetRevision:\ mybranch/g'
 ```
 
 ## Add Argo CD Projects and Applications
