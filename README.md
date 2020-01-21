@@ -6,6 +6,8 @@ Based on [this GitOps blog post](https://blog.openshift.com/introduction-to-gito
 
 Unlike the blog post, this will install ArgoCD based on the [ArgoCD Operator](https://github.com/argoproj-labs/argocd-operator) that is in development.
 
+## Install ArgoCD Operator
+
 For now, all the steps are distilled into `install-argocd-operator.sh`.  Running that script will install the operator, then install an Argo CD instance.
 
 ```
@@ -19,6 +21,29 @@ When logging in with the CLI locally using CodeReady Containers (CRC), you need 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 argocd login 127.0.0.1:8080
 ```
+
+## Install Bitnami SealedSecrets
+
+[Bitnami Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) offer a safe way to encrypt and save secrets in your git repositories just like any other resource.  The only entity that can decrypt these secrets is the Sealed Secrets controller running in the cluster.
+
+Installation takes a few steps in order to run on OpenShift.
+```
+# First, create the namespace for the SealedSecrets operator.
+oc adm new-project openshift-secrets
+oc project openshift-secrets
+
+# Next, create the secret with the TLS certs for encrypting secrets.
+# NEVER STORE THIS SECRET IN YOUR GIT REPO!  THIS IS ONLY A DEMO!
+oc create -f deploy/sealedsecrets-secret.yaml
+
+# Next, deploy the operator.
+oc create -f deploy/sealedsecrets.yaml
+
+# Finally, give the SealedSecrets service account anyuid, as it expects to run as 1001.
+oc adm policy add-scc-to-user anyuid -z sealed-secrets-controller
+```
+
+Now you can automatically decrypt `SealedSecrets` into real `Secrets`.  Woot!
 
 ## Fork and Update the Repo
 
