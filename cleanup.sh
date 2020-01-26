@@ -18,4 +18,4 @@ oc delete clusterrole/argocd-server
 oc delete clusterrolebinding/argocd-application-controller
 oc delete clusterrolebinding/argocd-server
 oc delete clusterrole/secrets-unsealer
-oc delete clusterrolebinding/secrets-unsealer
+oc delete clusterrolebinding/sealed-secrets-controller
