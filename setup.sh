@@ -17,10 +17,12 @@ read -p 'Git branch (e.g. master): ' GIT_REF
 read -p 'Quay read/write username: ' quayrwuser
 read -p 'Quay read/write email: ' quayrwemail
 read -sp 'Quay read/write password: ' quayrwpass
+quayrwpass="'$quayrwpass'"
 echo ""
 read -p 'Quay read-only username: ' quayrouser
 read -p 'Quay read-only email: ' quayroemail
 read -sp 'Quay read-only password: ' quayropass
+quayropass="'$quayropass'"
 echo ""
 
 echo "Setting git branch."
@@ -85,7 +87,7 @@ echo "Create dir for Sealed Secrets public key. (~/bitnami)."
 mkdir -p ~/bitnami
 
 echo "Get the public key from the Sealed Secrets secret."
-oc get secret -o yaml -n openshift-secrets -l sealedsecrets.bitnami.com/sealed-secrets-key | grep tls.key | cut -d' ' -f6 | base64 -D > ~/bitnami/publickey.pem
+oc get secret -o yaml -n openshift-secrets -l sealedsecrets.bitnami.com/sealed-secrets-key | grep tls.crt | cut -d' ' -f6 | base64 -D > ~/bitnami/publickey.pem
 
 echo "Creting Sealed Secrets."
 oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="$quayrwuser" --docker-password="$quayrwpass" --docker-email="$quayrwemail" -n cicd -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/cicd/builds/quay-cicd-sealedsecret.json
