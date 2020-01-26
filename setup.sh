@@ -1,5 +1,7 @@
 #!/bin/bash
 
+LANG=C
+
 echo ""
 echo "*****************************************************"
 echo "**                                                 **"
@@ -18,10 +20,12 @@ echo ""
 read -p 'Quay read/write username: ' quayrwuser
 read -p 'Quay read/write email: ' quayrwemail
 read -sp 'Quay read/write password: ' quayrwpass
+quayrwpass="'$quayrwpass'"
 echo ""
 read -p 'Quay read-only username: ' quayrouser
 read -p 'Quay read-only email: ' quayroemail
 read -sp 'Quay read-only password: ' quayropass
+quarytropass="'$quayropass'"
 echo ""
 
 echo "Setting git branch."
@@ -31,8 +35,6 @@ else
     echo "Creating branch $GIT_REF."
     git checkout -b $GIT_REF
 fi
-
-LANG=C
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     FIND_ROUTE_PREFIX=$'find $PWD \\( -type d -name .git -prune \\) -o -type f -print0 | xargs -0 sed -i \'\' \'s/apps\\.example\\.com/'
@@ -91,9 +93,9 @@ echo "Get the public key from the Sealed Secrets secret."
 oc get secret -o yaml -n openshift-secrets -l sealedsecrets.bitnami.com/sealed-secrets-key | grep tls.crt | cut -d' ' -f6 | base64 -D > ~/bitnami/publickey.pem
 
 echo "Creting Sealed Secrets."
-oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="$quayrwuser" --docker-password="$quayrwpass" --docker-email="$quayrwemail" -n cicd -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/cicd/builds/quay-cicd-sealedsecret.json
-oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password="$quayropass" --docker-email="$quayroemail" -n petclinic-dev -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/dev/quay-pull-sealedsecret.json
-oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password="$quayropass" --docker-email="$quayroemail" -n petclinic-uat -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/uat/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="$quayrwuser" --docker-password=$quayrwpass --docker-email="$quayrwemail" -n cicd -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/cicd/builds/quay-cicd-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-dev -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/dev/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-uat -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/uat/quay-pull-sealedsecret.json
 
 echo "Adding/Committing/Pushing to the $GIT_REF branch of $GIT_URL"
 git add --all
