@@ -93,14 +93,61 @@ echo "Get the public key from the Sealed Secrets secret."
 oc get secret -o yaml -n openshift-secrets -l sealedsecrets.bitnami.com/sealed-secrets-key | grep tls.crt | cut -d' ' -f6 | base64 -D > ~/bitnami/publickey.pem
 
 echo "Creting Sealed Secrets."
-oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="$quayrwuser" --docker-password=$quayrwpass --docker-email="$quayrwemail" -n cicd -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/cicd/builds/quay-cicd-sealedsecret.json
-oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-dev -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/dev/quay-pull-sealedsecret.json
-oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-uat -o json | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/uat/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="$quayrwuser" --docker-password=$quayrwpass --docker-email="$quayrwemail" -n cicd -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/cicd/builds/quay-cicd-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-dev -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/dev/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-uat -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/uat/quay-pull-sealedsecret.json
 
 echo "Adding/Committing/Pushing to the $GIT_REF branch of $GIT_URL"
 git add --all
 git commit -m "Updated routes and git repo urls/branches."
 git push origin $GIT_REF
 echo "Pushed!"
+
+echo ""
+echo "Installing Argo CD Operator."
+
+echo "Create the Argo CD project."
+oc adm new-project argocd
+
+echo "Configure RBAC for Argo CD"
+oc create -f install/argocd/deploy/service_account.yaml -n argocd
+oc create -f install/argocd/deploy/role.yaml -n argocd
+oc create -f install/argocd/deploy/role_binding.yaml -n argocd
+
+echo "Add the Argo CRDs."
+oc create -f install/argocd/deploy/argo-cd -n argocd
+
+echo "Add the Argo CD Operator."
+oc create -f install/argocd/deploy/crds/argoproj_v1alpha1_argocd_crd.yaml -n argocd
+
+sleep 5
+
+echo "There should be three CRDs."
+oc get crd | grep argo
+
+echo "Deploy the Operator."
+oc create -f install/argocd/deploy/operator.yaml -n argocd
+
+echo "Waiting for Argo CD operator to start."
+sleep 2
+
+while oc get deployment/argocd-controller -n argo-cd | grep "0/1" >> /dev/null;
+do
+    echo "Waiting..."
+    sleep 3
+done
+echo "Argo CD Operator ready!"
+
+echo "Create an instance of Argo CD."
+oc create -f install/argocd/examples/argocd-minimal.yaml -n argocd
+
+echo "Waiting for Argo CD to start."
+sleep 3
+while oc get deployment/argocd-controller -n argo-cd | grep "0/1" >> /dev/null;
+do
+    echo "Waiting..."
+    sleep 3
+done
+echo "Argo CD Operator ready!"
 
 echo "Done!"
