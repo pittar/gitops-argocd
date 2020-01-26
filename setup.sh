@@ -49,6 +49,7 @@ FIND_SUFFIX=$'/g\''
 ROUTE=$(sed 's/\./\\./g' <<< $APPS_BASE_URL)
 REPO=$(sed 's/\./\\./g' <<< $GIT_URL)
 REPO=$(sed 's/\//\\\//g' <<< $REPO)
+REPO=$(sed 's/\-/\\-/g' <<< $REPO)
 BRANCH=$(sed 's/\./\\./g' <<< $GIT_REF)
 
 FIND_AND_REPLACE_ROUTE=$FIND_ROUTE_PREFIX$ROUTE$FIND_SUFFIX
