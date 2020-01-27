@@ -5,6 +5,7 @@ bases:
 namespace: petclinic-uat
 resources:
 - namespace.yaml
+- quay-pull-sealedsecret.json
 patchesStrategicMerge:
 - route.yaml
 - deploymentconfig.yaml
