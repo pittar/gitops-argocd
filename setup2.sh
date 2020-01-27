@@ -92,7 +92,6 @@ oc create -f install/argocd/deploy/argo-cd -n argocd
 
 echo "Add the Argo CD Operator."
 oc create -f install/argocd/deploy/crds/argoproj_v1alpha1_argocd_crd.yaml -n argocd
-
 sleep 5
 
 echo "There should be three CRDs."
@@ -102,9 +101,9 @@ echo "Deploy the Operator."
 oc create -f install/argocd/deploy/operator.yaml -n argocd
 
 echo "Waiting for Argo CD operator to start."
-sleep 10
+sleep 15
 
-while oc get deployment/argocd-controller -n argocd | grep "0/1" >> /dev/null;
+while oc get deployment/argocd-operator -n argocd | grep "0/1" >> /dev/null;
 do
     echo "Waiting..."
     sleep 3
@@ -115,7 +114,7 @@ echo "Create an instance of Argo CD."
 oc create -f install/argocd/examples/argocd-minimal.yaml -n argocd
 
 echo "Waiting for Argo CD to start."
-sleep 20
+sleep 15
 
 while oc get deployment/argocd-server -n argocd | grep "0/1" >> /dev/null;
 do
@@ -133,7 +132,7 @@ oc create -f gitops/projects/config-project.yaml
 echo "Creating security app for security context constraints."
 oc create -f gitops/applications/cluster-config/security-application.yaml
 echo "Create sealed secrets application."
-oc create -f gitops/applications/cluster-config/sealedsecrets-appliation.yaml
+oc create -f gitops/applications/cluster-config/sealedsecrets-application.yaml
 
 echo "Waiting for Bitnami Sealed Secrets controller to start."
 sleep 15
