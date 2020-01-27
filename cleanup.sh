@@ -3,11 +3,6 @@
 # Deleting sealed secrets pem dir.
 rm -rf ~/bitnami
 
-# Delete sealed secrets project.
-oc delete project openshift-secrets
-# Delete argocd project.
-oc delete project argocd
-
 # Delete CRDs and ClusterRoles
 oc delete crd/applications.argoproj.io
 oc delete crd/appprojects.argoproj.io 
@@ -19,3 +14,8 @@ oc delete clusterrolebinding/argocd-application-controller
 oc delete clusterrolebinding/argocd-server
 oc delete clusterrole/secrets-unsealer
 oc delete clusterrolebinding/sealed-secrets-controller
+
+# Delete sealed secrets project.
+oc delete project openshift-secrets
+# Delete argocd project.
+oc delete project argocd

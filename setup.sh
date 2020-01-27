@@ -94,8 +94,8 @@ oc get secret -o yaml -n openshift-secrets -l sealedsecrets.bitnami.com/sealed-s
 
 echo "Creting Sealed Secrets."
 oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="$quayrwuser" --docker-password=$quayrwpass --docker-email="$quayrwemail" -n cicd -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/cicd/builds/quay-cicd-sealedsecret.json
-oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-dev -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/dev/quay-pull-sealedsecret.json
-oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-uat -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/overlays/uat/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-dev -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/petclinic/overlays/dev/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password=$quayropass --docker-email="$quayroemail" -n petclinic-uat -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/java/petclinic/overlays/uat/quay-pull-sealedsecret.json
 
 echo "Adding/Committing/Pushing to the $GIT_REF branch of $GIT_URL"
 git add --all
@@ -131,7 +131,7 @@ oc create -f install/argocd/deploy/operator.yaml -n argocd
 echo "Waiting for Argo CD operator to start."
 sleep 2
 
-while oc get deployment/argocd-controller -n argo-cd | grep "0/1" >> /dev/null;
+while oc get deployment/argocd-controller -n argocd | grep "0/1" >> /dev/null;
 do
     echo "Waiting..."
     sleep 3
@@ -142,12 +142,17 @@ echo "Create an instance of Argo CD."
 oc create -f install/argocd/examples/argocd-minimal.yaml -n argocd
 
 echo "Waiting for Argo CD to start."
-sleep 3
-while oc get deployment/argocd-controller -n argo-cd | grep "0/1" >> /dev/null;
+sleep 10
+
+while oc get deployment/argocd-server -n argocd | grep "0/1" >> /dev/null;
 do
     echo "Waiting..."
     sleep 3
 done
-echo "Argo CD Operator ready!"
+echo "Argo CD ready!"
+
+echo "Printing default admin password:"
+oc -n argocd get pod -l "app.kubernetes.io/name=argocd-server" -o jsonpath='{.items[*].metadata.name}'
+echo ""
 
 echo "Done!"
