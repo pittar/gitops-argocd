@@ -6,3 +6,4 @@ resources:
 - service.yaml
 - route.yaml
 - deploymentconfig.yaml
+- serviceaccount.yaml
