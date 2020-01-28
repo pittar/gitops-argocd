@@ -112,9 +112,9 @@ echo "Create an instance of Argo CD."
 oc create -f install/argocd/examples/argocd-minimal.yaml -n argocd
 
 echo "Waiting for Argo CD to start."
-sleep 15
+sleep 5
 
-while oc get deployment/argocd-server -n argocd | grep "0/1" >> /dev/null;
+until oc get deployment/argocd-server -n argocd | grep "1/1" >> /dev/null;
 do
     echo "Waiting..."
     sleep 3
@@ -135,9 +135,9 @@ echo "Create sealed secrets application."
 oc create -f gitops/applications/cluster-config/sealedsecrets-application.yaml
 
 echo "Waiting for Bitnami Sealed Secrets controller to start."
-sleep 15
+sleep 5
 
-while oc get deployment/sealed-secrets-controller -n openshift-secrets | grep "0/1" >> /dev/null;
+until oc get deployment/sealed-secrets-controller -n openshift-secrets | grep "1/1" >> /dev/null;
 do
     echo "Waiting..."
     sleep 3
