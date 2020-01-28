@@ -123,8 +123,10 @@ do
 done
 echo "Argo CD ready!"
 
+echo ""
 echo "Printing default admin password:"
 oc -n argocd get pod -l "app.kubernetes.io/name=argocd-server" -o jsonpath='{.items[*].metadata.name}'
+echo ""
 echo ""
 
 echo "Create config project for cluster configuration."
