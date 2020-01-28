@@ -1,10 +1,24 @@
 # GitOps with ArgoCD on OpenShift 4
 
-Install ArgoCD and some resources to demonstrate GitOps concepts and how they relate to OpenShift.
+This repository aims to be an evolving demo of GitOps tools and practices on OpenShift Container Platform.
 
-Based on [this GitOps blog post](https://blog.openshift.com/introduction-to-gitops-with-openshift/) from the [OpenShift blog](https://blog.openshift.com).
+The GitOps tool that is at the centre of this demo is [Argo CD](https://argoproj.github.io/argo-cd/).
 
-Unlike the blog post, this will install ArgoCD based on the [ArgoCD Operator](https://github.com/argoproj-labs/argocd-operator) that is in development.
+## What's in the Demo?
+
+1. **Argo CD**: Installed using the [Argo CD Operator](https://operatorhub.io/operator/argocd-operator).
+2. **Secret management**: [Bitnami Sealed Secrets Operator and kubeseal](https://github.com/bitnami-labs/sealed-secrets).
+3. **Image regisry**: [Quay.io](https://quay.io) as an external container image repository with vulnerability scanning.
+4. **CI/CD**: CI/CD tools installed and managed using GitOps practices, including Jenkins, SonarQube, Nexus, and Selenium Grid.
+5. **Pipeline**: Application development pipeline integrated into an application git repository.
+6. **Cloud IDE**: Cloud-based IDE leveraging CodeReady Workspaces.
+
+## Prerequisites
+
+1. Fork this repository into your own GitHub account.
+2. Create a free [Quay.io](https://quay.io) account.
+3. `kubeseal` cli toool on the path of the machine that will be running the setup script.
+
 
 ## Run the Setup Script
 
