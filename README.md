@@ -6,44 +6,32 @@ Based on [this GitOps blog post](https://blog.openshift.com/introduction-to-gito
 
 Unlike the blog post, this will install ArgoCD based on the [ArgoCD Operator](https://github.com/argoproj-labs/argocd-operator) that is in development.
 
-## Install ArgoCD Operator
+## Run the Setup Script
 
-For now, all the steps are distilled into `install-argocd-operator.sh`.  Running that script will install the operator, then install an Argo CD instance.
+Run `./setup.sh` and answer the following questions:
+* Apps base domain (e.g. apps.example.com, or apps-crc.testing)
+* Github URL - the URL of your fork of this repository (e.g https://github.com/username/gitops-argocd.git)
+* Branch - A new branch name to use, or master.
+* Quay read/write account:
+    * username:  A quay user with read and write to your quay repostiory
+    * email:  email account for this user
+    * password:  password for this user
+* Quay read-only account (can be same as read-write):
+    * username:  A quay user with read and write to your quay repostiory
+    * email:  email account for this user
+    * password:  password for this user
 
-```
-./install-argocd-operator.sh
-```
 
-Add the end of the script the initial Argo CD password should be printed to the terminal.  If you don't see a password, that's simply because the `argocd-server` pod hasn't started yet.  You can re-run the last `oc` command in the script to print the initial password.
+This will:
+1. Update yaml files with your own github repo and branch, as well as update any routes with your cluster apps url.
+2. Install ArgoCD into a new `argocd` namesapce and print the default admin password to the console.
+3. Install Bitnami Sealed Secrets (using Argo CD that you just installed!) and download the public key to use with `kubeseal`.
+4. Create some `SealedSecret` custom resources with your Quay credentials for use with Jenkins and for image pull secrets.
+5. Commit and push all this to your github repo and branch.
 
-When logging in with the CLI locally using CodeReady Containers (CRC), you need do some port forwarding:
-```
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-argocd login 127.0.0.1:8080
-```
+Once this is done, your cluster will have Argo CD up and running as well as Bitnami Sealed Secrets.  You will also be ready to create more sealed secrets with `kubeseal`.
 
-## Install Bitnami SealedSecrets
-
-[Bitnami Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) offer a safe way to encrypt and save secrets in your git repositories just like any other resource.  The only entity that can decrypt these secrets is the Sealed Secrets controller running in the cluster.
-
-Installation takes a few steps in order to run on OpenShift.
-```
-# First, create the namespace for the SealedSecrets operator.
-oc adm new-project openshift-secrets
-oc project openshift-secrets
-
-# Next, create the secret with the TLS certs for encrypting secrets.
-# NEVER STORE THIS SECRET IN YOUR GIT REPO!  THIS IS ONLY A DEMO!
-oc create -f deploy/sealedsecrets-secret.yaml
-
-# Next, deploy the operator.
-oc create -f deploy/sealedsecrets.yaml
-
-# Finally, give the SealedSecrets service account anyuid, as it expects to run as 1001.
-oc adm policy add-scc-to-user anyuid -z sealed-secrets-controller
-```
-
-Now you can automatically decrypt `SealedSecrets` into real `Secrets`.  Woot!
+Woot!
 
 ## Fork and Update the Repo
 
