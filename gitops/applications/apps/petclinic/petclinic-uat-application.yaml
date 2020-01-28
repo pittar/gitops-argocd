@@ -27,6 +27,10 @@ spec:
     kind: ReplicationController
     jsonPointers:
     - /spec/replicas
+  - group: ""
+    kind: ServiceAccount
+    jsonPointers:
+    - /imagePullSecrets
   - group: route.openshift.io
     kind: Route
     jsonPointers:
