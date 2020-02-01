@@ -13,10 +13,25 @@ echo "**    - Copy Sealed Secrets public key.            **"
 echo "**                                                 **"
 echo "*****************************************************"
 
+GIT_URL=`git config --get remote.origin.url`
+GIT_URL="$remote.git"
+
+GIT_REF=`git rev-parse --abbrev-ref HEAD`
+
+read -p "Use repository $GIT_URL (y/n)? " useremote
+if [[ "$useremote" == "n" ]]; then
+    read -p "Git repository: "  GIT_URL
+fi
+echo "Using repository $GIT_URL"
+
+
+read -p "Use branch $GIT_REF (y/n)?" usebranch
+if [[ "$usebranch" == "n" ]]; then
+    read -p "Repository branch: " GIT_REF
+fi
+echo "Using branch $GIT_REF"
+
 read -p 'Base apps url (e.g. apps.ocp.pitt.ca): ' APPS_BASE_URL
-read -p 'Git repository url: ' GIT_URL
-read -p 'Git branch (e.g. master): ' GIT_REF
-echo ""
 read -p 'Quay read/write username: ' quayrwuser
 read -p 'Quay read/write email: ' quayrwemail
 read -sp 'Quay read/write password: ' quayrwpass

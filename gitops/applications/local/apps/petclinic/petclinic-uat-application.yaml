@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: petclinic-uat
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: java-project
+  source:
+    path: gitops/java/petclinic/overlays/local/uat
+    repoURL: git.url.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+  ignoreDifferences:
+  - group: apps.openshift.io
+    kind: DeploymentConfig
+    jsonPointers:
+    - /spec/replicas
+  - group: ""
+    kind: ReplicationController
+    jsonPointers:
+    - /spec/replicas
+  - group: ""
+    kind: ServiceAccount
+    jsonPointers:
+    - /imagePullSecrets
+  - group: route.openshift.io
+    kind: Route
+    jsonPointers:
+    - /status/ingress
+  sync:
+    comparedTo:
+      destination:
+        namespace: argocd
+        server: https://kubernetes.default.svc
+      source:
+        path: gitops/java/petclinic/overlays/local/uat
+        repoURL: git.url.git
+        targetRevision: master
