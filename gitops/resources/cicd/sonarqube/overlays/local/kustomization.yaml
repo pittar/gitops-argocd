@@ -3,13 +3,10 @@ kind: Kustomization
 bases:
 - ../../bases
 namespace: cicd
-resources:
-- namespace.yaml
-- quay-pull-sealedsecret.json
 patchesJson6902:
 - target:
     group: route.openshift.io
     version: v1
     kind: Route
-    name: jenkins
+    name: sonarqube
   path: route-patch.json

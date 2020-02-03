@@ -1,0 +1,3 @@
+[
+    {"op": "replace", "path": "/spec/host", "value": "selenium-hub-cicd.apps-crc.testing"}
+]
