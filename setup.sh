@@ -14,7 +14,7 @@ echo "**                                                 **"
 echo "*****************************************************"
 
 GIT_URL=`git config --get remote.origin.url`
-GIT_URL="$remote.git"
+GIT_URL="$GIT_URL.git"
 
 GIT_REF=`git rev-parse --abbrev-ref HEAD`
 
