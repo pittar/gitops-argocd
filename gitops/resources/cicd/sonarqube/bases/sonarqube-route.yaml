@@ -7,16 +7,10 @@ metadata:
   namespace: cicd
 spec:
   host: sonarqube-cicd.apps.example.com
-  subdomain: ""
   to:
     kind: Service
     name: sonarqube
     weight: 100
   wildcardPolicy: None
 status:
-  ingress:
-  - conditions:
-    host: sonarqube-cicd.apps.example.com
-    routerCanonicalHostname: apps.example.com
-    routerName: default
-    wildcardPolicy: None
+  ingress: []

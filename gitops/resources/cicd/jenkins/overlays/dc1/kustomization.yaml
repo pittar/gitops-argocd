@@ -3,9 +3,6 @@ kind: Kustomization
 bases:
 - ../../bases
 namespace: cicd
-resources:
-- namespace.yaml
-- quay-pull-sealedsecret.json
 patchesJson6902:
 - target:
     group: route.openshift.io

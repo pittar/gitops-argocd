@@ -11,7 +11,6 @@ metadata:
   namespace: cicd
 spec:
   host: jenkins-cicd.apps.example.com
-  subdomain: ""
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
@@ -21,9 +20,4 @@ spec:
     weight: 100
   wildcardPolicy: None
 status:
-  ingress:
-  - conditions:
-    host: jenkins-cicd.apps.example.com
-    routerCanonicalHostname: apps.example.com
-    routerName: default
-    wildcardPolicy: None
+  ingress: []

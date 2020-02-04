@@ -3,8 +3,6 @@ kind: Kustomization
 bases:
 - ../../bases
 namespace: cicd
-resources:
-- namespace.yaml
 patchesJson6902:
 - target:
     group: route.openshift.io
