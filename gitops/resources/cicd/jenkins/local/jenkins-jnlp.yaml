@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jenkins-persistent
+    template: jenkins-persistent-template
+  name: jenkins-jnlp
+  namespace: cicd
+spec:
+  ports:
+  - name: agent
+    port: 50000
+    protocol: TCP
+    targetPort: 50000
+  selector:
+    name: jenkins
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

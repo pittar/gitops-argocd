@@ -9,7 +9,7 @@ metadata:
   name: nexus
   namespace: cicd
 spec:
-  host: nexus-cicd.apps.example.com
+  host: nexus-cicd.apps.dc1.com
   port:
     targetPort: 8081-tcp
   to:

@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: cicd
-resources:
-- nexus-dc.yaml
-- nexus-is.yaml
-- nexus-pv.yaml
-- nexus-route.yaml
-- nexus-svc.yaml

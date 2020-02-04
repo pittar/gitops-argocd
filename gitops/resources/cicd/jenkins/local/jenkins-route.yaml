@@ -10,7 +10,7 @@ metadata:
   name: jenkins
   namespace: cicd
 spec:
-  host: jenkins-cicd.apps.example.com
+  host: jenkins-cicd.apps-crc.testing
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
