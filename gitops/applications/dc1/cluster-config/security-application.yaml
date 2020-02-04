@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cluster-security
+  name: cluster-security-dc1
   namespace: argocd
 spec:
   destination:
@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: config-project
   source:
-    path: gitops/security
+    path: gitops/resources/security/overlays/dc1
     repoURL: git.url.git
     targetRevision: master
   syncPolicy:
@@ -22,6 +22,6 @@ spec:
         namespace: argocd
         server: https://kubernetes.default.svc
       source:
-        path: gitops/security
+        path: gitops/resources/security/overlays/dc1
         repoURL: git.url.git
         targetRevision: master
