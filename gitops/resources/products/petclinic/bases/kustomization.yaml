@@ -7,3 +7,4 @@ resources:
 - route.yaml
 - deploymentconfig.yaml
 - serviceaccount.yaml
+- quay-pull-sealedsecret.json

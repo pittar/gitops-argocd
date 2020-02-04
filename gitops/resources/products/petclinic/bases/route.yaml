@@ -11,19 +11,13 @@ metadata:
     app.openshift.io/runtime-version: "8"
   name: petclinic
 spec:
-  host: app-petclinic-default.apps.example.com
+  host: app-petclinic-default.apps-crc.testing
   port:
     targetPort: 8080-tcp
-  subdomain: ""
   to:
     kind: Service
     name: petclinic
     weight: 100
   wildcardPolicy: None
 status:
-  ingress:
-  - conditions:
-    host: app-petclinic-default.apps.example.com
-    routerCanonicalHostname: apps.example.com
-    routerName: default
-    wildcardPolicy: None
+  ingress: []

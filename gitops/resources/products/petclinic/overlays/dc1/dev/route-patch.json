@@ -1,0 +1,3 @@
+[
+    {"op": "replace", "path": "/spec/host", "value": "app-petclinic-dev.apps.dc1.com"}
+]
