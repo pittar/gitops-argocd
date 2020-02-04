@@ -10,5 +10,5 @@ patchesJson6902:
     group: route.openshift.io
     version: v1
     kind: Route
-    name: sonarqube
+    name: selenium-hub
   path: route-patch.json

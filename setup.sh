@@ -145,9 +145,9 @@ echo ""
 echo "Create config project for cluster configuration."
 oc create -f gitops/projects/config-project.yaml
 echo "Creating security app for security context constraints."
-oc create -f gitops/applications/cluster-config/security-application.yaml
+oc create -f gitops/applications/$GIT_REF/cluster-config/security-application.yaml
 echo "Create sealed secrets application."
-oc create -f gitops/applications/cluster-config/sealedsecrets-application.yaml
+oc create -f gitops/applications/$GIT_REF/cluster-config/sealedsecrets-application.yaml
 
 echo "Waiting for Bitnami Sealed Secrets controller to start."
 sleep 5

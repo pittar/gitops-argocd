@@ -1,3 +1,3 @@
 [
-    {"op": "replace", "path": "/spec/host", "value": "jenkins-cicd.apps.dev.com"}
+    {"op": "replace", "path": "/spec/host", "value": "jenkins-cicd.apps.dc1.com"}
 ]

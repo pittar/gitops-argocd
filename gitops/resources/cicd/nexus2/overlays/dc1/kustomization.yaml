@@ -8,5 +8,5 @@ patchesJson6902:
     group: route.openshift.io
     version: v1
     kind: Route
-    name: selenium-hub
+    name: nexus
   path: route-patch.json
