@@ -12,16 +12,10 @@ spec:
   host: nexus-cicd.apps.example.com
   port:
     targetPort: 8081-tcp
-  subdomain: ""
   to:
     kind: Service
     name: nexus
     weight: 100
   wildcardPolicy: None
 status:
-  ingress:
-  - conditions:
-    host: nexus-cicd.apps.example.com
-    routerCanonicalHostname: apps.example.com
-    routerName: default
-    wildcardPolicy: None
+  ingress: []
