@@ -173,7 +173,7 @@ oc create secret docker-registry quay-pull-secret --docker-server=quay.io --dock
 mkdir -p ~/tmp/tmpsecrets
 oc create secret generic quay-creds-secret --from-literal="username=$quayrwuser" --from-literal="password=$quayrwpass" -n cicd -o yaml --dry-run > ~/tmp/tmpsecrets/quay-creds.yaml
 printf "  labels:\n    credential.sync.jenkins.openshift.io: \"true\"\n" >> ~/tmp/tmpsecrets/quay-creds.yaml
-kubeseal --cert ~/bitnami/publickey.pem < ~/tmp/tmpsecrets/quay-creds.yaml > gitops/cicd/builds/quay-creds-sealedsecret.json
+kubeseal --cert ~/bitnami/publickey.pem < ~/tmp/tmpsecrets/quay-creds.yaml > gitops/resources/cicd/builds/quay-creds-sealedsecret.json
 rm -rf ~/tmp/tmpsecrets
 
 echo "Adding/Committing/Pushing sealed secrets to the $GIT_REF branch of $GIT_URL"
