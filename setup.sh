@@ -168,7 +168,8 @@ oc get secret -o yaml -n openshift-secrets -l sealedsecrets.bitnami.com/sealed-s
 
 echo "Creting Sealed Secrets."
 oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="$quayrwuser" --docker-password="$quayrwpass" --docker-email="$quayrwemail" -n cicd -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/resources/cicd/builds/quay-cicd-sealedsecret.json
-oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password="$quayropass" --docker-email="$quayroemail" -n petclinic-dev -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/resources/products/petclinic/bases/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password="$quayropass" --docker-email="$quayroemail" -n petclinic-dev -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/resources/products/petclinic/overlays/dc1/dev/quay-pull-sealedsecret.json
+oc create secret docker-registry quay-pull-secret --docker-server=quay.io --docker-username="$quayrouser" --docker-password="$quayropass" --docker-email="$quayroemail" -n petclinic-uat -o json --dry-run | kubeseal --cert ~/bitnami/publickey.pem > gitops/resources/products/petclinic/overlays/dc1/uat/quay-pull-sealedsecret.json
 # Need to write this one to disk temporarily in order to add a label to it.
 mkdir -p ~/tmp/tmpsecrets
 oc create secret generic quay-creds-secret --from-literal="username=$quayrwuser" --from-literal="password=$quayrwpass" -n cicd -o yaml --dry-run > ~/tmp/tmpsecrets/quay-creds.yaml

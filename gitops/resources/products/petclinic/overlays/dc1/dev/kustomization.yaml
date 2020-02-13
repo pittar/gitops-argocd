@@ -5,6 +5,7 @@ bases:
 namespace: petclinic-dev
 resources:
 - namespace.yaml
+- quay-pull-sealedsecret.json
 patchesJson6902:
 - target:
     group: route.openshift.io
